@@ -27,7 +27,10 @@ Route::middleware(['auth', 'active'])->group(function () {
     Route::post('documents/{document}/route-action',  [DocumentController::class, 'routeAction'])->name('documents.routeAction');
     Route::patch('documents/{document}/archive',      [DocumentController::class, 'archive'])->name('documents.archive');
     Route::get('documents/{document}/barcode',        [DocumentController::class, 'printBarcode'])->name('documents.barcode');
-    Route::get('documents/{document}/file',        [DocumentController::class, 'file'])->name('documents.file');
+    Route::get('documents/{document}/file',        [DocumentController::class, 'file'])->name('documents.file');
+
+    // User guide: incoming and outgoing documents
+    Route::view('help/incoming-outgoing', 'help.directions')->name('help.directions');
 
     // Workflows
     Route::resource('workflows', WorkflowController::class);

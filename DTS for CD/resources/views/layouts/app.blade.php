@@ -73,6 +73,9 @@
         <a href="{{ route('documents.create') }}" class="nav-link">
             <i class="bi bi-plus-circle"></i> Submit Document
         </a>
+        <a href="{{ route('help.directions') }}" class="nav-link {{ request()->routeIs('help.*') ? 'active':'' }}">
+            <i class="bi bi-question-circle"></i> Guide: Incoming &amp; Outgoing
+        </a>
 
         @auth
         <span class="nav-section">Quick Filters</span>
