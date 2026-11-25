@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             CampusSeeder::class,
             UserSeeder::class,
             WorkflowSeeder::class,
+            DefaultWorkflowSeeder::class,
         ]);
     }
 }

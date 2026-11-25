@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-500">Category <span class="text-danger">*</span></label>
-                            <select name="category" class="form-select @error('category') is-invalid @enderror" required>
+                            <select name="category" class="form-select @error('category') is-invalid @enderror" required onchange="applyDefaultWorkflow(this.value)">
                                 <option value="">Select category...</option>
                                 @foreach(\App\Models\Document::CATEGORIES as $cat)
                                 <option value="{{ $cat }}" {{ old('category')==$cat?'selected':'' }}>{{ $cat }}</option>
@@ -196,6 +196,13 @@
 
 @push('scripts')
 <script>
+const defaultWorkflows = @json($defaultWorkflows);
+function applyDefaultWorkflow(category) {
+    const sel = document.querySelector('select[name="workflow_template_id"]');
+    const id = defaultWorkflows[category];
+    sel.value = id ? String(id) : '';
+    sel.dispatchEvent(new Event('change'));
+}
 function docForm() {
     return {
         selectedWorkflow: '{{ old("workflow_template_id","") }}',

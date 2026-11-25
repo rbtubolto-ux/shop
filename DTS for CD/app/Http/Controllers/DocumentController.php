@@ -65,7 +65,8 @@ class DocumentController extends Controller
         $users     = User::where('campus_id', $user->campus_id)->where('is_active', true)->get();
         $workflows = WorkflowTemplate::where('campus_id', $user->campus_id)->where('is_active', true)->with('steps.assignedUser')->get();
         $allDocs   = Document::where('campus_id', $user->campus_id)->latest()->get();
-        return view('documents.create', compact('users','workflows','allDocs'));
+        $defaultWorkflows = $workflows->mapWithKeys(fn ($w) => [$w->document_type => $w->id])->all();
+        return view('documents.create', compact('users', 'workflows', 'allDocs', 'defaultWorkflows'));
     }
 
     public function store(Request $request)
