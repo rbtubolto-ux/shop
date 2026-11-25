@@ -46,6 +46,7 @@ class WorkflowController extends Controller
             'steps.*.step_name'               => 'required|string|max:255',
             'steps.*.assigned_to'             => 'nullable|exists:users,id',
             'steps.*.role_required'           => 'nullable|string',
+            'steps.*.subject'             => ['nullable', \Illuminate\Validation\Rule::in(\App\Models\WorkflowStep::SUBJECTS)],
             'steps.*.pending_threshold_hours' => 'required|integer|min:1',
         ]);
 
@@ -65,6 +66,7 @@ class WorkflowController extends Controller
                     'step_name'               => $step['step_name'],
                     'assigned_to'             => $step['assigned_to'] ?? null,
                     'role_required'           => $step['role_required'] ?? null,
+                    'subject'                 => $step['subject'] ?? null,
                     'pending_threshold_hours' => $step['pending_threshold_hours'],
                 ]);
             }
@@ -94,6 +96,7 @@ class WorkflowController extends Controller
             'steps.*.step_name'               => 'required|string|max:255',
             'steps.*.assigned_to'             => 'nullable|exists:users,id',
             'steps.*.role_required'           => 'nullable|string',
+            'steps.*.subject'             => ['nullable', \Illuminate\Validation\Rule::in(\App\Models\WorkflowStep::SUBJECTS)],
             'steps.*.pending_threshold_hours' => 'required|integer|min:1',
         ]);
 
@@ -114,6 +117,7 @@ class WorkflowController extends Controller
                     'step_name'               => $step['step_name'],
                     'assigned_to'             => $step['assigned_to'] ?? null,
                     'role_required'           => $step['role_required'] ?? null,
+                    'subject'                 => $step['subject'] ?? null,
                     'pending_threshold_hours' => $step['pending_threshold_hours'],
                 ]);
             }

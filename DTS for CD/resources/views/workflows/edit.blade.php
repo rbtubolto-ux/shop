@@ -80,6 +80,15 @@
                                     <input type="number" :name="'steps['+i+'][pending_threshold_hours]'" x-model="step.pending_threshold_hours"
                                            class="form-control form-control-sm" min="1" required>
                                 </div>
+                                <div class="col-12">
+                                    <label class="form-label small fw-500">Routing slip subject</label>
+                                    <select :name="'steps['+i+'][subject]'" x-model="step.subject" class="form-select form-select-sm">
+                                        <option value="">Default for this role</option>
+                                        @foreach(\App\Models\WorkflowStep::SUBJECTS as $sj)
+                                        <option value="{{ $sj }}">{{ $sj }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <input type="hidden" :name="'steps['+i+'][role_required]'" x-model="step.role_required">
                             </div>
                         </div>
@@ -99,8 +108,8 @@
 <script>
 function workflowEditForm() {
     return {
-        steps: @json($workflow->steps->map(fn($s) => ['step_name' => $s->step_name, 'assigned_to' => $s->assigned_to ?? '', 'role_required' => $s->role_required ?? '', 'pending_threshold_hours' => $s->pending_threshold_hours])),
-        addStep() { this.steps.push({ step_name: '', assigned_to: '', role_required: '', pending_threshold_hours: 48 }); },
+        steps: @json($workflow->steps->map(fn($s) => ['step_name' => $s->step_name, 'assigned_to' => $s->assigned_to ?? '', 'role_required' => $s->role_required ?? '', 'subject' => $s->subject ?? '', 'pending_threshold_hours' => $s->pending_threshold_hours])),
+        addStep() { this.steps.push({ step_name: '', assigned_to: '', role_required: '', subject: '', pending_threshold_hours: 48 }); },
         removeStep(i) { if(this.steps.length > 1) this.steps.splice(i, 1); }
     }
 }

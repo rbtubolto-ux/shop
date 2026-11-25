@@ -10,7 +10,7 @@ class DocumentRoute extends Model
     protected $fillable = [
         'document_id', 'workflow_step_id', 'step_order', 'step_name',
         'assigned_to', 'action', 'comments', 'acted_by', 'acted_at',
-        'received_at', 'signature_path',
+        'received_at', 'signature_path', 'subject',
     ];
 
     protected $casts = [

@@ -88,6 +88,7 @@ class DocumentController extends Controller
             'container'           => 'nullable|string|max:100',
             'retention_code'      => 'nullable|string|max:100',
             'remarks'             => 'nullable|string',
+            'routing_instructions' => 'nullable|string|max:1000',
             'related_documents'   => 'nullable|array',
             'related_documents.*' => 'exists:documents,id',
             'file'                => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
@@ -127,6 +128,7 @@ class DocumentController extends Controller
             'is_confidential'     => $request->boolean('is_confidential'),
             'submitted_by'        => $user->id,
             'remarks'             => $validated['remarks'] ?? null,
+            'routing_instructions' => $validated['routing_instructions'] ?? null,
             'file_path'           => $filePath,
             'file_name'           => $fileName,
         ]);
@@ -192,6 +194,7 @@ class DocumentController extends Controller
             'container'           => 'nullable|string|max:100',
             'retention_code'      => 'nullable|string|max:100',
             'remarks'             => 'nullable|string',
+            'routing_instructions' => 'nullable|string|max:1000',
             'related_documents'   => 'nullable|array',
             'related_documents.*' => 'exists:documents,id',
             'file'                => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
@@ -332,6 +335,16 @@ class DocumentController extends Controller
         return back()->with('success', "Action '{$validated['action']}' recorded successfully.");
     }
 
+    public function routingSlip(Document $document)
+    {
+        $this->authorizeView($document);
+        $document->load(['campus', 'submitter', 'routes.assignedUser']);
+        $current  = $document->currentRoute();
+        $subjects = \App\Models\WorkflowStep::SUBJECTS;
+
+        return view('documents.routing-slip', compact('document', 'current', 'subjects'));
+    }
+
     public function archive(Document $document)
     {
         $this->authorizeView($document);
@@ -379,6 +392,7 @@ class DocumentController extends Controller
                 'workflow_step_id' => $step->id,
                 'step_order'       => $step->step_order,
                 'step_name'        => $step->step_name,
+                'subject'        => $step->subject ?? \App\Models\WorkflowStep::defaultSubjectFor($step->role_required),
                 'assigned_to'      => $step->assigned_to,
                 'action'           => 'Pending',
                 'received_at'      => $step->step_order === 1 ? now() : null,

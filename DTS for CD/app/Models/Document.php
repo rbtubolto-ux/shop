@@ -17,6 +17,7 @@ class Document extends Model
         'cabinet', 'drawer', 'container', 'remarks', 'archived_at',
         'signature_path', 'approved_by', 'approved_at',
         'retention_code', 'is_confidential', 'disposition',
+        'routing_instructions',
     ];
 
     protected $casts = [

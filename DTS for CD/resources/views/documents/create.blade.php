@@ -112,6 +112,11 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="mt-3">
+                        <label class="form-label fw-500">Other instructions <span class="small text-muted">(printed on the routing slip)</span></label>
+                        <textarea name="routing_instructions" rows="2" class="form-control" placeholder="e.g. Please act before the board meeting">{{ old('routing_instructions') }}</textarea>
+                    </div>
+
                     <div x-show="steps.length > 0" class="mt-3">
                         <div class="small fw-500 text-muted mb-2">Routing Steps Preview:</div>
                         <div class="d-flex flex-wrap gap-2">
