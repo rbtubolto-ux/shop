@@ -116,6 +116,17 @@
             <i class="bi bi-bar-chart"></i> Reports
         </a>
         @endif
+        <a href="{{ route('logbook.index') }}" class="nav-link {{ request()->routeIs('logbook.*') ? 'active':'' }}">
+            <i class="bi bi-journal-text"></i> Logbook
+        </a>
+        <a href="{{ route('requisitions.index') }}" class="nav-link {{ request()->routeIs('requisitions.*') ? 'active':'' }}">
+            <i class="bi bi-box-arrow-up-right"></i> Requisitions
+        </a>
+        @if(Auth::user()->canManageDocuments())
+        <a href="{{ route('records.index') }}" class="nav-link {{ request()->routeIs('records.*') ? 'active':'' }}">
+            <i class="bi bi-diagram-3"></i> Records Management
+        </a>
+        @endif
         <a href="{{ route('archive.index') }}" class="nav-link {{ request()->routeIs('archive.*') ? 'active':'' }}">
             <i class="bi bi-archive"></i> Archive
         </a>

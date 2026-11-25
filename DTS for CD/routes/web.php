@@ -8,6 +8,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\LogbookController;
+use App\Http\Controllers\RequisitionController;
+use App\Http\Controllers\RecordsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +34,21 @@ Route::middleware(['auth', 'active'])->group(function () {
 
     // Archive
     Route::get('archive', [ArchiveController::class, 'index'])->name('archive.index');
+
+    // Logbook (FAM 13.1 section 3.7)
+    Route::get('logbook', [LogbookController::class, 'index'])->name('logbook.index');
+
+    // Records requisitions (FAM 13.1 section 3.10)
+    Route::get('requisitions', [RequisitionController::class, 'index'])->name('requisitions.index');
+    Route::post('documents/{document}/requisitions', [RequisitionController::class, 'store'])->name('requisitions.store');
+    Route::patch('requisitions/{requisition}/issue', [RequisitionController::class, 'issue'])->name('requisitions.issue');
+    Route::patch('requisitions/{requisition}/acknowledge', [RequisitionController::class, 'acknowledge'])->name('requisitions.acknowledge');
+    Route::patch('requisitions/{requisition}/return', [RequisitionController::class, 'returned'])->name('requisitions.return');
+
+    // Records management: inventory and classification (FAM 13.1 sections 3.11-3.15)
+    Route::get('records', [RecordsController::class, 'index'])->name('records.index');
+    Route::patch('records/{document}/disposition', [RecordsController::class, 'setDisposition'])->name('records.disposition');
+
 
     // Reports
     Route::get('reports', [ReportController::class, 'index'])->name('reports.index');

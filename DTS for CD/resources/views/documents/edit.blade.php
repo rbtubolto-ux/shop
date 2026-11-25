@@ -98,6 +98,33 @@
                         </div>
                     </div>
 
+                    <div class="row g-3 mt-2">
+
+                        <div class="col-md-6">
+
+                            <label class="form-label fw-500">Retention code</label>
+
+                            <input type="text" name="retention_code" value="{{ old('retention_code', $document->retention_code) }}" class="form-control">
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label class="form-label fw-500">Confidential</label>
+
+                            <div class="form-check mt-2">
+
+                                <input class="form-check-input" type="checkbox" name="is_confidential" value="1" id="isConfidentialEdit" {{ old('is_confidential', $document->is_confidential) ? 'checked' : '' }}>
+
+                                <label class="form-check-label" for="isConfidentialEdit">Keep separately (visible to managers and submitter only)</label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
                     <div class="d-flex gap-2 mt-4 pt-3 border-top">
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-save me-1"></i>Save Changes

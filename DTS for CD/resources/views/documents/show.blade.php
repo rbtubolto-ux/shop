@@ -209,7 +209,7 @@
     {{-- Right: Action Panel + Related Docs --}}
     <div class="col-lg-4">
         {{-- Submit (if Draft) --}}
-        @if($document->status === 'Draft' && $document->submitted_by === Auth::id())
+        @if($document->status === 'Draft' && (int) $document->submitted_by === Auth::id())
         <div class="card border-0 border-start border-4 border-primary mb-4">
             <div class="card-header bg-white border-bottom py-3"><h6 class="mb-0 fw-600">Submit Document</h6></div>
             <div class="card-body">
@@ -223,6 +223,19 @@
         @endif
 
         {{-- Routing Action Panel --}}
+        @if(!$document->is_confidential || Auth::user()->canManageDocuments() || (int) $document->submitted_by === Auth::id())
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-bottom py-3"><h6 class="mb-0 fw-600">Request this record</h6></div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('requisitions.store', $document) }}">
+                    @csrf
+                    <textarea name="purpose" rows="2" class="form-control mb-2" placeholder="Purpose of the request" required></textarea>
+                    <button class="btn btn-sm btn-outline-primary">Submit requisition</button>
+                </form>
+            </div>
+        </div>
+        @endif
+
         @if($canAct)
         <div class="card border-0 border-start border-4 border-warning mb-4">
             <div class="card-header bg-white border-bottom py-3">

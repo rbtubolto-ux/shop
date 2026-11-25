@@ -144,6 +144,18 @@
                         <div class="col-md-4">
                             <label class="form-label fw-500">Container / Folder</label>
                             <input type="text" name="container" value="{{ old('container') }}" class="form-control" placeholder="Folder/box label">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-500">Retention code</label>
+                                <input type="text" name="retention_code" value="{{ old('retention_code') }}" class="form-control" placeholder="e.g. per NAP General Records Schedule">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-500">Confidential</label>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" name="is_confidential" value="1" id="isConfidential" {{ old('is_confidential') ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="isConfidential">Keep separately (visible to managers and submitter only)</label>
+                                </div>
+
                         </div>
                     </div>
                 </div>

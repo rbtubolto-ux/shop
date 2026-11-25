@@ -16,12 +16,14 @@ class Document extends Model
         'submitted_by', 'workflow_template_id', 'current_step',
         'cabinet', 'drawer', 'container', 'remarks', 'archived_at',
         'signature_path', 'approved_by', 'approved_at',
+        'retention_code', 'is_confidential', 'disposition',
     ];
 
     protected $casts = [
         'date_submitted' => 'date',
         'due_date'       => 'date',
         'archived_at'    => 'datetime',
+        'is_confidential' => 'boolean',
         'approved_at'    => 'datetime',
     ];
 

@@ -23,6 +23,7 @@ class DocumentController extends Controller
 
         // Scope by role
         $query->where('campus_id', $user->campus_id);
+        if (!$user->canManageDocuments()) $query->where(fn($q) => $q->where('is_confidential', false)->orWhere('submitted_by', $user->id));
         if ($user->isDocumentSubmitter()) {
             $query->where('submitted_by', $user->id);
         } elseif ($user->isRoutingUnit()) {
@@ -84,6 +85,7 @@ class DocumentController extends Controller
             'cabinet'             => 'nullable|string|max:100',
             'drawer'              => 'nullable|string|max:100',
             'container'           => 'nullable|string|max:100',
+            'retention_code'      => 'nullable|string|max:100',
             'remarks'             => 'nullable|string',
             'related_documents'   => 'nullable|array',
             'related_documents.*' => 'exists:documents,id',
@@ -120,6 +122,8 @@ class DocumentController extends Controller
             'cabinet'             => $validated['cabinet'] ?? null,
             'drawer'              => $validated['drawer'] ?? null,
             'container'           => $validated['container'] ?? null,
+            'retention_code'      => $validated['retention_code'] ?? null,
+            'is_confidential'     => $request->boolean('is_confidential'),
             'submitted_by'        => $user->id,
             'remarks'             => $validated['remarks'] ?? null,
             'file_path'           => $filePath,
@@ -185,6 +189,7 @@ class DocumentController extends Controller
             'cabinet'             => 'nullable|string|max:100',
             'drawer'              => 'nullable|string|max:100',
             'container'           => 'nullable|string|max:100',
+            'retention_code'      => 'nullable|string|max:100',
             'remarks'             => 'nullable|string',
             'related_documents'   => 'nullable|array',
             'related_documents.*' => 'exists:documents,id',
@@ -198,6 +203,7 @@ class DocumentController extends Controller
             $validated['file_path'] = $file->store('documents', 'local');
         }
 
+        $validated['is_confidential'] = $request->boolean('is_confidential');
         $document->update($validated);
         $document->relatedDocuments()->sync($validated['related_documents'] ?? []);
 
@@ -331,6 +337,7 @@ class DocumentController extends Controller
         $user = Auth::user();
 
         if (!$user->canManageDocuments()) abort(403);
+        if (empty($document->retention_code)) return back()->with('error', 'Set a retention code before archiving (FAM 13.1 section 3.5).');
 
         $document->update(['status' => 'Archived', 'archived_at' => now()]);
 
@@ -400,6 +407,7 @@ class DocumentController extends Controller
     {
         $user = Auth::user();
         if ($user->campus_id !== $document->campus_id) abort(403);
+        if ($document->is_confidential && !$user->canManageDocuments() && (int) $document->submitted_by !== $user->id) abort(403);
         if ($user->canManageDocuments()) return;
         if ((int) $document->submitted_by === $user->id) return;
         if ($document->routes()->where('assigned_to', $user->id)->exists()) return;
@@ -410,6 +418,7 @@ class DocumentController extends Controller
     {
         $user = Auth::user();
         if ($user->campus_id !== $document->campus_id) abort(403);
+        if ($document->is_confidential && !$user->canManageDocuments() && (int) $document->submitted_by !== $user->id) abort(403);
         if ($user->canManageDocuments()) return;
         if ($user->isDocumentSubmitter() && (int) $document->submitted_by === $user->id) return;
         abort(403);

@@ -85,3 +85,35 @@ Uploaded documents are now stored in a private folder and served only through au
 move storage\app\public\documents\* storage\app\private\documents\
 ```
 Signature images remain in `storage\app\public\signatures`.
+
+---
+
+## Records Management (FAM 13.1)
+
+The system follows the Finance and Administration Manual, **FAM 13.1 Records Management** (rev. 0, effective April 17, 2017).
+
+| Manual requirement | Where it is in the system |
+|---|---|
+| 3.2 Records Management Officer (RMO) | The **Document Controller** role is labelled *Records Management Officer*. |
+| 3.3, 3.7 Receive, release and log all records; logbook open to the public | **Logbook** page (`/logbook`). Confidential entries are shown only to managers. |
+| 3.5 Retention code before filing | **Retention code** field on each document. Archiving is blocked until it is set. |
+| 3.9 Confidential records kept separately | **Confidential** flag. Only managers and the submitter can see or act on these documents. |
+| 3.10 Requisition procedures (forms 5.1.1, 5.1.2) | **Requisitions** page. Requisition, issue by RMO, acknowledgement by requester, return. |
+| 3.11, 3.12, 5.1.3, 5.2.2 Inventory and appraisal | **Records Management** page: inventory by retention code. |
+| 3.13, 5.2.3 Semi-annual classification | **Records Management** page: disposition (*For Retention*, *Archive*, *Dispose*). |
+| 3.15 Disposal per schedule | Disposition is recorded and logged. Physical disposal is not tracked. |
+
+### Decisions to confirm
+
+- **RMO = Document Controller.** The manual says the RMO has sole access to the office file (3.8). Campus Directors can still see and classify documents in this system. Confirm if the Director should be excluded from that access.
+- **Retention periods are not in the system.** Retention codes are free text. Enter the codes from the NAP General Records Schedule and the campus Records Disposition Schedule.
+- **Routing units cannot see confidential documents**, even when routed to them. Confirm this is intended.
+- **The manual's RMO review step (4.0, step 4)** is not built into the workflow templates. Add an RMO step to a template if it should be enforced.
+
+### Upgrading an existing installation
+
+Run the new migrations only (do not use `migrate:fresh`, which deletes data):
+
+```
+php artisan migrate
+```

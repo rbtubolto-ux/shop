@@ -46,7 +46,7 @@ class User extends Authenticatable
     public function getRoleLabel(): string
     {
         return match($this->role) {
-            'document_controller' => 'Document Controller',
+            'document_controller' => 'Records Management Officer',
             'campus_director'     => 'Campus Director',
             'routing_unit'        => 'Routing Unit',
             'document_submitter'  => 'Document Submitter',
