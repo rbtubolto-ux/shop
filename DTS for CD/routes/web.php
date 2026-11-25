@@ -47,7 +47,9 @@ Route::middleware(['auth', 'active'])->group(function () {
 
     // Records management: inventory and classification (FAM 13.1 sections 3.11-3.15)
     Route::get('records', [RecordsController::class, 'index'])->name('records.index');
-    Route::patch('records/{document}/disposition', [RecordsController::class, 'setDisposition'])->name('records.disposition');
+    Route::patch('records/{document}/disposition', [RecordsController::class, 'setDisposition'])->name('records.disposition');
+    Route::post('records/{document}/examine', [RecordsController::class, 'examine'])->name('records.examine');
+    Route::post('records/reviews', [RecordsController::class, 'review'])->name('records.reviews.store');
 
 
     // Reports

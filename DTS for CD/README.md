@@ -99,13 +99,14 @@ The system follows the Finance and Administration Manual, **FAM 13.1 Records Man
 | 3.5 Retention code before filing | **Retention code** field on each document. Archiving is blocked until it is set. |
 | 3.9 Confidential records kept separately | **Confidential** flag. Only managers and the submitter can see or act on these documents. |
 | 3.10 Requisition procedures (forms 5.1.1, 5.1.2) | **Requisitions** page. Requisition, issue by RMO, acknowledgement by requester, return. |
-| 3.11, 3.12, 5.1.3, 5.2.2 Inventory and appraisal | **Records Management** page: inventory by retention code. |
-| 3.13, 5.2.3 Semi-annual classification | **Records Management** page: disposition (*For Retention*, *Archive*, *Dispose*). |
+| 3.11, 3.12, 5.2.2 Inventory and appraisal | **Records Management** page: inventory by retention code, a yearly inventory reminder (every 12 months), and a recorded review history with the record count. The prescribed NAP form (5.1.3) is not generated. |
+| 3.13, 5.2.3 Semi-annual classification | **Records Management** page: disposition (*For Retention*, *Archive*, *Dispose*), a reminder every 6 months, and recorded reviews. |
+| 3.14 Periodic file examination | Condition checks (Good, Fair, Poor, Damaged) recorded per file. Files not checked in 12 months are listed as due. |
 | 3.15 Disposal per schedule | Disposition is recorded and logged. Physical disposal is not tracked. |
 
 ### Decisions to confirm
 
-- **RMO = Document Controller.** The manual says the RMO has sole access to the office file (3.8). Campus Directors can still see and classify documents in this system. Confirm if the Director should be excluded from that access.
+- **RMO = Document Controller.** Campus Directors keep full access to documents and records in this system, as confirmed. Section 3.8 (RMO has sole access to the office file) is therefore not enforced by the system.
 - **Retention periods are not in the system.** Retention codes are free text. Enter the codes from the NAP General Records Schedule and the campus Records Disposition Schedule.
 - **Routing units cannot see confidential documents**, even when routed to them. Confirm this is intended.
 - **The manual's RMO review step (4.0, step 4)** is not built into the workflow templates. Add an RMO step to a template if it should be enforced.

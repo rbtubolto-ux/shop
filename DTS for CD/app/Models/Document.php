@@ -64,6 +64,16 @@ class Document extends Model
         'Others'            => 'bi-file-earmark',
     ];
 
+    public function examinations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(RecordsExamination::class)->latest('examined_at');
+    }
+
+    public function latestExamination(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(RecordsExamination::class)->latestOfMany('examined_at');
+    }
+
     public function campus(): BelongsTo
     {
         return $this->belongsTo(Campus::class);
